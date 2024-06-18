@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
-import {CreateUserDto} from './dto/create-user.dto'
+import { CreateUserDto } from './dto/create-user.dto'
 
 @Injectable()
 export class UsersService {
 
-    constructor( @InjectRepository(User) private userRepository:Repository<User> ) { }
+    constructor(@InjectRepository(User) private userRepository: Repository<User>) { }
 
-    createUser( user: CreateUserDto ) {
+    createUser(user: CreateUserDto) {
         const newUser = this.userRepository.create(user)
         return this.userRepository.save(newUser)
     }
@@ -18,7 +18,7 @@ export class UsersService {
         return this.userRepository.find()
     }
 
-    getUser( id: number) {
+    getUser(id: number) {
         return this.userRepository.findOne({
             where: {
                 id
@@ -26,6 +26,11 @@ export class UsersService {
         })
     }
 
+    deleteUser(id: number) {
+        return this.userRepository.delete({ id })
+    }
+
     
+
 
 }
